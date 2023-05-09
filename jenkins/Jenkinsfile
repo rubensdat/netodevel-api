@@ -3,10 +3,12 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
-                echo 'Building..'
+            agent {
+                docker { image 'maven' }
             }
-        }
+            steps {
+                sh 'mvn package -Dmaven.test.skip=true'
+            }
         stage('Test') {
             steps {
                 echo 'Testing..'
@@ -17,5 +19,5 @@ pipeline {
                 echo 'Deploying....'
             }
         }
+        }
     }
-}
